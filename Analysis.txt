@@ -1,0 +1,149 @@
+ANALYSIS : 
+
+Observation : 
+* As there are 2 names in column "Item_Fat_Content" - low fat and regualar, so we are updating them using replace function
+* Maximum bougth products lies in Fruits and Vegetables category, and minimum lies in Seafood
+* maximum stores are opened in year "1985", ie., 1463. 
+* maximum stores have outlet_size : 2793
+* there are 1559 items stored in 10 outlets
+
+* Outlet_Location_Type  Outlet_Type      
+Tier 1                Supermarket Type1    1860; 
+                      Grocery Store         528
+
+Tier 2                Supermarket Type1    2785; 
+
+Tier 3                Supermarket Type3     935; 
+                      Supermarket Type1     932; 
+                      Supermarket Type2     928; 
+                      Grocery Store         555
+
+
+* location of outlets as per Tier city
+
+Tier 1 :                OUT019; OUT046; OUT049
+
+Tier 2 :                OUT017; OUT045; OUT035
+
+Tier 3 :                OUT010; OUT018; OUT013; OUT027 
+
+* df.groupby('Outlet_Type')['Outlet_Size'].value_counts()
+
+Grocery Store      Small           
+
+Supermarket Type1  Small; High; Medium
+
+Supermarket Type2  Medium
+
+Supermarket Type3  Medium
+
+
+* we have found the value of NaN value in column " Outlet_Size" as "Small", because ; on filtering we analyzed,
+    Grocery Store are "Small" size and after filling those values, we are left with Tier 2 cities that have only "Small" size stores.
+    
+    (Pls, cross-check with the excel)
+
+
+* We are filling 0 as value in column "Item_Weight" to check what are the names under column "Item_Type". 
+We got all the names in our answer. that's why you shall begin again from start,ie, don't implement next 2 code lines
+
+
+* Tier3 has maximum sales of Rs.(76,36,753.00) and  Tier1 has minimum sales of Rs.(44,82,059.00)
+* OUT035 has maximum sales Rs.(22,68,123.00) and OUT019 has minimum sales Rs.(1,79,694.10)
+* Supermarket Type1 has maximum sales of Rs.(1,29,17,340.00) and Grocery Store has minimum sales of Rs.( 3,68,034.30)
+* Fruits and Vegetables has maximum sales of Rs.(28,20,060.00) and Seafood has minimum sales of Rs.(1,48,868.20)
+
+
+* the product that has minimum visibility with respect to area has maximum amount of sales and vice-versa
+
+
+
+
+
+
+Conclusion : 
+
+* we use Standard_scaler to make correct dataset, out of which 3 were numberical columns and four are categorical values.
+* final columns name :  	regular, Medium, Small, Supermarket Type1, Supermarket Type2, Supermarket Type, Item_Visibility, Item_MRP, Item_Outlet_Sales
+* here, we removed column "Item_Weight", as it doesn't play significant role. It's p-value was 0.67, taken from est table drawn below
+
+
+While comparing other models, wwe found the way to use apppropriate column on the basis of accuracy. The values are shown below.
+#### Min-Max Scaler (without item_type): 
+REGRESSION: 0.556019 (0.017947) (run time: 0.078134)
+CART: 0.168837 (0.068288) (run time: 0.421773)
+KNN: 0.499872 (0.022673) (run time: 0.484293)
+SVM: 0.586770 (0.018163) (run time: 15.667961)
+
+
+#### Standard Scaler (without item_type): 
+REGRESSION: 0.558059 (0.018292) (run time: 0.070506)
+CART: 0.178018 (0.057807) (run time: 0.753226)
+KNN: 0.520149 (0.035734) (run time: 0.325452)
+SVM: 0.593464 (0.016893) (run time: 29.404863)
+
+
+#### Standard Scaler (without item_type, output_type): 
+REGRESSION: 0.558059 (0.018292) (run time: 0.083138)
+CART: 0.173608 (0.057730) (run time: 0.980327)
+KNN: 0.519127 (0.035670) (run time: 0.559344)
+SVM: 0.593604 (0.016992) (run time: 33.324273)
+
+
+#### Standard Scaler (without item_type, location): 
+REGRESSION: 0.558281 (0.018167) (run time: 0.079465)
+CART: 0.182670 (0.071258) (run time: 0.718338)
+KNN: 0.520000 (0.029563) (run time: 0.373572)
+SVM: 0.593015 (0.017284) (run time: 29.680189)
+
+
+#### Standard Scaler (without item_type, location, Item_Weight): 
+REGRESSION: 0.558339 (0.018158) (run time: 0.075847)
+CART: 0.192136 (0.079433) (run time: 0.589220)
+KNN: 0.523552 (0.020637) (run time: 0.291624)
+SVM: 0.594117 (0.017590) (run time: 27.358596)
+
+
+#### Regrression methods comparison : 
+LINEAR REGRESSION: 0.558339 (0.018158) (run time: 0.046855)
+RIDGE: 0.558336 (0.018072) (run time: 0.015622)
+LASSO: -0.002552 (0.001903) (run time: 0.031242)
+ELASTICNET: 0.050962 (0.005161) (run time: 0.031242)
+
+#### out of Regression techniques, Ridge is the most suitable one
+linear : 0.56732; 
+ridge : 0.5674; 
+lasso : -0.000857; 
+elasticnet : 0.05077
+
+
+
+#### SVR with tuning :-  
+C = 1, epsilon = 0.1, kernel = "rbf"
+metrics.r2_score :   0.6082871249884878
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
